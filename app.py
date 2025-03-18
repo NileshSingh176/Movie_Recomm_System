@@ -2,12 +2,14 @@ import streamlit as st
 import pickle
 import numpy as np
 import requests
+import gzip
 
 
 # movies_list = pickle.load(open("Movies.pkl","rb"))
 movies_dict = pickle.load(open("Movies.pkl","rb"))
 movies_list = movies_dict["title"].values
-similarity = pickle.load(open("similarity.pkl","rb"))
+with gzip.open("similarity.pkl.gz", "rb") as f:
+    similarity = pickle.load(f)
 
 
 sorted_result = sorted(enumerate(similarity[0]), reverse=True, key=lambda x: x[1])[1:6]
